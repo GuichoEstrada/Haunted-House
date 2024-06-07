@@ -41,17 +41,17 @@ This will start a local server and open the project in your default web browser.
 ```
 
 ## Features
-# Models
+### Models
 - **House**: Built using boxes for walls and roof.
 - **Graveyard**: Consists of cylinders and boxes to create tombstones.
 - **Trees**: Modeled using cylinders for trunks and spheres or cones for foliage.
 - **Lights**: Various light sources including ambient, directional, point, and spotlights to create a spooky atmosphere.
-# Controls
+### Controls
 - **Orbit Controls**: Allowing the user to rotate around the scene, zoom in and out, and pan.
-# Shadows and Effects
+### Shadows and Effects
 - **Shadows**: Implemented using Three.js shadow capabilities.
 - **Fog**: Added to enhance the eerie atmosphere.
-# Lighting GUI
+### Lighting GUI
 - **Ambient Light**: Adjustable intensity and toggle option.
 - **Directional Light**: Adjustable intensity and position (X, Y, Z).
 
