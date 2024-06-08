@@ -10,7 +10,7 @@
 5. Usage
 6. References
 
-## Technology Used
+## Technologies Used
 - **Three.js**: A JavaScript library used to create and display animated 3D graphics in the browser.
 - **JavaScript**: The primary programming language used for the project.
 - **HTML & CSS**: Used for structuring and styling the web page.
