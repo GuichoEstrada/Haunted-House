@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
+import { depth } from 'three/examples/jsm/nodes/Nodes.js'
 
 /**
  * Base
@@ -111,11 +112,35 @@ const floor = new THREE.Mesh(
         floorMeasurements.height
     ), 
     new THREE.MeshStandardMaterial() 
-);
+)
 floor.rotation.x = -Math.PI * 0.5
 
+// Graves
+const graveMeasurements = {
+    width: 0.6,
+    height: 0.8,
+    depth: 0.2
+}
+const graveGeometry = new THREE.BoxGeometry( graveMeasurements.width, graveMeasurements.height, graveMeasurements.depth)
+const graveMaterial = new THREE.MeshStandardMaterial()
+
+const graves = new THREE.Group()
+for(let i = 0; i < 30; i++) {
+    // Place the graves around the house (circle trigonometry)
+    const angle = Math.random() * Math.PI * 2
+    const radius = 3 + Math.random() * 4.5
+    const x = Math.sin(angle) * radius
+    const z = Math.cos(angle) * radius
+    // Create mesh for a grave
+    const grave = new THREE.Mesh(graveGeometry, graveMaterial)
+    // Set graves position and rotation
+    grave.position.set(x, Math.random() * 0.4, z)
+    grave.rotation.x = grave.rotation.y = grave.rotation.z = (Math.random() - 0.5) * 0.4
+    graves.add(grave)
+}
+
 house.add(walls, roof, door, bush1, bush2, bush3, bush4)
-scene.add(floor, house)
+scene.add(floor, house, graves)
 
 /**
  * Lights
