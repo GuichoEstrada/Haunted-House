@@ -19,6 +19,34 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
+ * Textures
+ */
+// Floor
+const textureLoader = new THREE.TextureLoader()
+const floorAlphaTexture = textureLoader.load('./floor/alpha.jpg')
+const floorColorTexture = textureLoader.load('./floor/coast_sand_rocks_02_diff_1k.jpg')
+const floorARMTexture = textureLoader.load('./floor/coast_sand_rocks_02_arm_1k.jpg')
+const floorNormalTexture = textureLoader.load('./floor/coast_sand_rocks_02_nor_gl_1k.jpg')
+const floorDisplacementTexture = textureLoader.load('./floor/coast_sand_rocks_02_disp_1k.jpg')
+
+floorColorTexture.colorSpace = THREE.SRGBColorSpace
+
+floorColorTexture.repeat.set(8,8)
+floorARMTexture.repeat.set(8,8)
+floorNormalTexture.repeat.set(8,8)
+floorDisplacementTexture.repeat.set(8,8)
+
+floorColorTexture.wrapS = THREE.RepeatWrapping
+floorARMTexture.wrapS = THREE.RepeatWrapping
+floorNormalTexture.wrapS = THREE.RepeatWrapping
+floorDisplacementTexture.wrapS = THREE.RepeatWrapping
+
+floorColorTexture.wrapT = THREE.RepeatWrapping
+floorARMTexture.wrapT = THREE.RepeatWrapping
+floorNormalTexture.wrapT = THREE.RepeatWrapping
+floorDisplacementTexture.wrapT = THREE.RepeatWrapping
+
+/**
  * Objects
  */
 // House
@@ -104,14 +132,29 @@ bush4.position.set(-1, 0.05, 2.6)
 // Floor
 const floorMeasurements = {
     width: 20,
-    height: 20
+    height: 20,
+    widthSegments: 100,
+    heightSegments: 100
 }
 const floor = new THREE.Mesh( 
     new THREE.PlaneGeometry(
         floorMeasurements.width,
-        floorMeasurements.height
+        floorMeasurements.height,
+        floorMeasurements.widthSegments,
+        floorMeasurements.heightSegments
     ), 
-    new THREE.MeshStandardMaterial() 
+    new THREE.MeshStandardMaterial({
+        alphaMap: floorAlphaTexture,
+        transparent: true,
+        map: floorColorTexture,
+        aoMap: floorARMTexture,
+        roughnessMap: floorARMTexture,
+        metalnessMap: floorARMTexture,
+        normalMap: floorNormalTexture,
+        displacementMap: floorDisplacementTexture,
+        displacementScale: 0.3,
+        displacementBias: -0.2
+    }) 
 )
 floor.rotation.x = -Math.PI * 0.5
 
@@ -190,6 +233,7 @@ scene.add(camera)
  */
 // General Lighting
 const lightingFolder = gui.addFolder('Lighting')
+const floorDisplacementMapFolder = gui.addFolder('Displacement Map')
 
 // Ambient Light
 const ambientLightFolder = lightingFolder.addFolder('Ambient Light')
@@ -211,7 +255,12 @@ directionalLightFolder.add(directionalLight.position, 'x').name('Position X').mi
 directionalLightFolder.add(directionalLight.position, 'y').name('Position Y').min(-50).max(50).step(0.05)
 directionalLightFolder.add(directionalLight.position, 'z').name('Position Z').min(-50).max(50).step(0.05)
 
+// Displacement Map
+floorDisplacementMapFolder.add(floor.material, 'displacementScale').name('Floor Displacement Scale').min(0).max(1).step(0.001)
+floorDisplacementMapFolder.add(floor.material, 'displacementBias').name('Floor Displacement Bias').min(-1).max(1).step(0.001)
+
 lightingFolder.close()
+floorDisplacementMapFolder.close()
 
 
 // Controls
