@@ -1,6 +1,7 @@
 # Haunted House
 
-### This project is a 3D haunted house scene built using Three.js. The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and cylinders. No pre-made models are used.
+### This project is a 3D haunted house scene built using Three.js. 
+###The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and cylinders. No pre-made models are used.
 
 ## Table of Contents
 1. Techonologies Used
@@ -18,8 +19,9 @@
 - **vite**: A powerful and efficient tool offering fast build times, real-time updates, and optimized code handling
 
 ## Current Stage of Development
-### The project currently features a basic structure of a haunted house with adjustable settings using a GUI. Below is a screenshot of the current development stage:
-<img width="958" alt="current_stage" src="https://github.com/GuichoEstrada/Haunted-House/assets/44462824/8c0b274d-f7aa-4317-a04c-9d9258c57adf">
+### The project currently features a basic structure of a haunted house with adjustable settings using a GUI. 
+### Below is a screenshot of the current development stage:
+<img width="956" alt="image" src="https://github.com/GuichoEstrada/Haunted-House/assets/44462824/cbfde487-0744-499f-86c1-fed7382e2ea2">
 
 ## Installation
 To get started, clone the repository and install the dependencies:
@@ -42,18 +44,19 @@ This will start a local server and open the project in your default web browser.
 
 ## Features
 ### Models
-- **House**: Built using boxes for walls and roof.
-- **Graveyard**: Consists of cylinders and boxes to create tombstones.
-- **Trees**: Modeled using cylinders for trunks and spheres or cones for foliage.
+- **House**: Built using boxes for walls and cone geomtery for the roof.
+- **Graveyard**: Consists of boxes to create tombstones.
+- **Trees**: Modeled using spheres for foliage.
 - **Lights**: Various light sources including ambient, directional, point, and spotlights to create a spooky atmosphere.
 ### Controls
 - **Orbit Controls**: Allowing the user to rotate around the scene, zoom in and out, and pan.
 ### Shadows and Effects
 - **Shadows**: Implemented using Three.js shadow capabilities.
 - **Fog**: Added to enhance the eerie atmosphere.
-### Lighting GUI
+### GUI
 - **Ambient Light**: Adjustable intensity and toggle option.
 - **Directional Light**: Adjustable intensity and position (X, Y, Z).
+- **Floor Displacement**: Adjustable floor displacement scale and bias.
 
 ## References
 
