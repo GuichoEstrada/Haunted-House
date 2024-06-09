@@ -10,7 +10,7 @@
 5. Usage
 6. References
 
-## Technology Used
+## Technologies Used
 - **Three.js**: A JavaScript library used to create and display animated 3D graphics in the browser.
 - **JavaScript**: The primary programming language used for the project.
 - **HTML & CSS**: Used for structuring and styling the web page.
@@ -18,8 +18,8 @@
 - **vite**: A powerful and efficient tool offering fast build times, real-time updates, and optimized code handling
 
 ## Current Stage of Development
-### The project currently features a basic structure of a haunted house with adjustable lighting using a GUI. Below is a screenshot of the current development stage:
-<img width="459" alt="image" src="https://github.com/GuichoEstrada/Haunted-House/assets/44462824/abf4c5d3-b781-43b1-bf9d-e1b77e20ae79">
+### The project currently features a basic structure of a haunted house with adjustable settings using a GUI. Below is a screenshot of the current development stage:
+<img width="958" alt="current_stage" src="https://github.com/GuichoEstrada/Haunted-House/assets/44462824/8c0b274d-f7aa-4317-a04c-9d9258c57adf">
 
 ## Installation
 To get started, clone the repository and install the dependencies:
