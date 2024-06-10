@@ -1,7 +1,8 @@
 # Haunted House
 
-### This project is a 3D haunted house scene built using Three.js. 
-###The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and cylinders. No pre-made models are used.
+### This project is a simple 3D haunted house scene built using Three.js. 
+### The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and cylinders. 
+### No pre-made models are used.
 
 ## Table of Contents
 1. Techonologies Used
@@ -21,7 +22,9 @@
 ## Current Stage of Development
 ### The project currently features a basic structure of a haunted house with adjustable settings using a GUI. 
 ### Below is a screenshot of the current development stage:
-<img width="956" alt="image" src="https://github.com/GuichoEstrada/Haunted-House/assets/44462824/cbfde487-0744-499f-86c1-fed7382e2ea2">
+
+https://github.com/GuichoEstrada/Haunted-House/assets/44462824/ae64f6ba-f65e-4f05-b288-27e2e7cfe5c6
+
 
 ## Installation
 To get started, clone the repository and install the dependencies:
