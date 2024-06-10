@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
+import { fog } from 'three/examples/jsm/nodes/Nodes.js'
 
 /**import { depth } from 'three/examples/jsm/nodes/Nodes.js'
 
@@ -344,16 +345,124 @@ camera.position.set(4, 2, 5)
 scene.add(camera)
 
 /**
+ * Controls
+ */
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
+/**
+ * Ghosts
+ */
+const ghost1 = new THREE.PointLight('#380070', 6)
+const ghost2 = new THREE.PointLight('#f28135', 6)
+const ghost3 = new THREE.PointLight('#b50000', 6)
+
+scene.add(ghost1, ghost2, ghost3)
+
+/**
+ * Renderer
+ */
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas
+})
+renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+/**
+ * Shadows
+ */
+//Renderer
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
+// Cast and Receive
+directionalLight.castShadow = true
+ghost1.castShadow = true
+ghost2.castShadow = true
+ghost3.castShadow = true
+walls.castShadow = true
+walls.receiveShadow = true
+roof.castShadow = true
+floor.receiveShadow = true
+// Individual grave scope is not accessible so use .children and for loop
+for(const grave of graves.children) {
+    grave.castShadow = true
+    grave.receiveShadow = true
+}
+
+// Mapping
+directionalLight.shadow.mapSize.width = 256
+directionalLight.shadow.mapSize.height = 256
+directionalLight.shadow.camera.top = 8
+directionalLight.shadow.camera.right = 8
+directionalLight.shadow.camera.bottom = - 8
+directionalLight.shadow.camera.left = - 8
+directionalLight.shadow.camera.near = 1
+directionalLight.shadow.camera.far = 20
+
+ghost1.shadow.mapSize.width = 256
+ghost1.shadow.mapSize.height = 256
+ghost1.shadow.mapSize.far = 10
+
+ghost2.shadow.mapSize.width = 256
+ghost2.shadow.mapSize.height = 256
+ghost2.shadow.mapSize.far = 10
+
+ghost3.shadow.mapSize.width = 256
+ghost3.shadow.mapSize.height = 256
+ghost3.shadow.mapSize.far = 10
+
+/**
+ * Animate
+ */
+const timer = new Timer()
+
+const tick = () =>
+{
+    // Timer
+    timer.update()
+    const elapsedTime = timer.getElapsed()
+
+    // Ghost movement
+    const ghost1Angle = (elapsedTime / 3) * 0.5
+    ghost1.position.x = Math.cos(ghost1Angle) * 4
+    ghost1.position.z = Math.sin(ghost1Angle)* 4
+    ghost1.position.y = Math.sin(ghost1Angle) * Math.sin(ghost1Angle * 2.34)
+
+    const ghost2Angle = -(elapsedTime / 2) * 0.38
+    ghost2.position.x = Math.cos(ghost2Angle) * 5
+    ghost2.position.z = Math.sin(ghost2Angle)* 5
+    ghost2.position.y = Math.sin(ghost2Angle) * Math.sin(ghost2Angle * 2.34) * Math.sin(ghost2Angle * 3.45)
+
+    const ghost3Angle = (elapsedTime / 2.5) * 0.23
+    ghost3.position.x = Math.cos(ghost3Angle) * 6
+    ghost3.position.z = Math.sin(ghost3Angle)* 6
+    ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(ghost3Angle * 2.34) * Math.sin(ghost3Angle * 3.45)
+
+    // Update controls
+    controls.update()
+
+    // Render
+    renderer.render(scene, camera)
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+
+tick()
+
+/**
  * GUI/Helpers
  */
 // General Lighting
 const lightingFolder = gui.addFolder('Lighting')
-const floorDisplacementMapFolder = gui.addFolder('Displacement Map')
+const floorDisplacementMapFolder = gui.addFolder('Floor Displacement')
+const ghostSettingsFolder = gui.addFolder('Ghosts')
+const skySettingsFolder = gui.addFolder('Sky')
+const fogSettingsFolder = gui.addFolder('Fog')
 
 // Ambient Light
 const ambientLightFolder = lightingFolder.addFolder('Ambient Light')
 const ambientLightState = { enabled: true };
-
 ambientLightFolder.add(ambientLightState, 'enabled').name('Enabled').onChange(value => {
     ambientLight.visible = value;
 });
@@ -382,38 +491,13 @@ pointLightFolder.add(doorLight, 'intensity').name('Intensity').min(0).max(10).st
 floorDisplacementMapFolder.add(floor.material, 'displacementScale').name('Floor Displacement Scale').min(0).max(1).step(0.001)
 floorDisplacementMapFolder.add(floor.material, 'displacementBias').name('Floor Displacement Bias').min(-1).max(1).step(0.001)
 
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+// Ghost Color
+ghostSettingsFolder.addColor(ghost1, 'color').name('Ghost 1 Color').onChange((value) => {
+    ghost1.color.setHex(value);
+});
 
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-/**
- * Animate
- */
-const timer = new Timer()
-
-const tick = () =>
-{
-    // Timer
-    timer.update()
-    const elapsedTime = timer.getElapsed()
-
-    // Update controls
-    // controls.update()
-
-    // Render
-    renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
-
-tick()
+lightingFolder.close()
+floorDisplacementMapFolder.close()
+ghostSettingsFolder.close()
+skySettingsFolder.close()
+fogSettingsFolder.close()
