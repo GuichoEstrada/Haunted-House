@@ -1,7 +1,7 @@
 # Haunted House
 
 ### This project is a simple 3D haunted house scene built using Three.js. 
-### The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and cylinders. 
+### The models are created using primitive shapes provided by Three.js, such as boxes, spheres, and planes.
 ### No pre-made models are used.
 
 ## Table of Contents
