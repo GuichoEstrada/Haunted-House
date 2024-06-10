@@ -2,9 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
-import { fog } from 'three/examples/jsm/nodes/Nodes.js'
-
-/**import { depth } from 'three/examples/jsm/nodes/Nodes.js'
+import { Sky } from 'three/examples/jsm/Addons.js'
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
 /**
  * Base
@@ -314,6 +313,27 @@ doorLight.position.set(0, 2.2, 2.5)
 house.add(doorLight)
 
 /**
+ * Sky
+ */
+// Sky is a box mesh
+const sky = new Sky()
+sky.material.uniforms.turbidity.value = 10
+sky.material.uniforms.rayleigh.value = 3
+sky.material.uniforms.mieCoefficient.value = 0.1
+sky.material.uniforms.mieDirectionalG.value = 0.95
+sky.material.uniforms.sunPosition.value.set(0.3, -0.038, -0.95)
+// Enclose scene in sky box mesh
+sky.scale.setScalar(100)
+
+scene.add(sky)
+
+/**
+ * Fog
+ */
+const fog = new THREE.FogExp2('#02343f', 0.1)
+scene.fog = fog
+
+/**
  * Sizes
  */
 const sizes = {
@@ -341,7 +361,7 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(4, 2, 5)
+camera.position.set(3, 2, 10)
 scene.add(camera)
 
 /**
@@ -492,8 +512,29 @@ floorDisplacementMapFolder.add(floor.material, 'displacementScale').name('Floor 
 floorDisplacementMapFolder.add(floor.material, 'displacementBias').name('Floor Displacement Bias').min(-1).max(1).step(0.001)
 
 // Ghost Color
-ghostSettingsFolder.addColor(ghost1, 'color').name('Ghost 1 Color').onChange((value) => {
-    ghost1.color.setHex(value);
+ghostSettingsFolder.addColor({ color: ghost1.color.getHex() }, 'color').name('Color').onChange((value) => {
+    ghost1.color.set(value);
+});
+ghostSettingsFolder.addColor({ color: ghost2.color.getHex() }, 'color').name('Color').onChange((value) => {
+    ghost2.color.set(value);
+});
+ghostSettingsFolder.addColor({ color: ghost3.color.getHex() }, 'color').name('Color').onChange((value) => {
+    ghost3.color.set(value);
+});
+
+// Sky Settings
+skySettingsFolder.add(sky.material.uniforms.turbidity, 'value').name('Turbidity').min(-20).max(20).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.rayleigh, 'value').name('Rayleigh').min(-20).max(20).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.mieCoefficient, 'value').name('Mie Coefficient').min(-20).max(20).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.mieDirectionalG, 'value').name('Mie Directional G').min(-20).max(20).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.sunPosition.value, 'x').name('Sun Position X').min(-1).max(1).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.sunPosition.value, 'y').name('Sun Position Y').min(-15).max(15).step(0.001)
+skySettingsFolder.add(sky.material.uniforms.sunPosition.value, 'z').name('Sun Position Z').min(-10).max(10).step(0.001)
+
+// Fog Settings
+fogSettingsFolder.add(fog, 'density').name('Density').min(0).max(1).step(0.001)
+fogSettingsFolder.addColor({ color: fog.color.getHex() }, 'color').name('Color').onChange((value) => {
+    fog.color.set(value);
 });
 
 lightingFolder.close()
