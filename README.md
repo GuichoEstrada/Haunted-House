@@ -71,7 +71,7 @@ This will start a local server and open the project in your default web browser.
 ## References
 ### Textures:
 - **Coast Sand Rocks 02** by Rob Tuytel - https://polyhaven.com/a/coast_sand_rocks_02
-- **Plastered Stone Wall** by Rob Tuytelhttps://polyhaven.com/a/plastered_stone_wall
+- **Plastered Stone Wall** by Rob Tuytel - https://polyhaven.com/a/plastered_stone_wall
 - **Roof Slates 02** by Rob Tuytel - https://polyhaven.com/a/roof_slates_02
 - **Classic** Brick Broken 06 by Rob Tuytel - https://polyhaven.com/a/castle_brick_broken_06
 - **Leaves** Forest Ground by Dario Barresi & Dimitrios Savva - https://polyhaven.com/a/leaves_forest_ground
